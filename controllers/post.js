@@ -35,6 +35,7 @@ const postController = {
     }
     data.content = data.content?.trim();
     const user = req.user.id;
+    data.user = user;
     await Post.create(data);
     const getAllPosts = await Post.find({user}).populate({
       path: 'user',
