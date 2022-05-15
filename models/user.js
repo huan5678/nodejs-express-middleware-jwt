@@ -13,19 +13,19 @@ const userSchema = {
   },
   password: {
     type: String,
-    minLength: 8,
+    minLength: [7, '長度至少 8 個字'],
     required: [true, '密碼欄位，請確實填寫'],
     matches: [
-      /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){8,}$/,
-      '密碼需符合至少有 1 個數字， 1 個大寫英文， 1 個小寫英文及 1 個特殊符號規定，至少 8 碼',
+      /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){7,}$/,
+      '密碼需符合至少有 1 個數字， 1 個大寫英文， 1 個小寫英文及 1 個特殊符號規定',
     ],
     select: false,
   },
   name: {
     type: String,
     required: [true, '名稱為必要資訊'],
-    minLength: 3,
-    maxLength: 50,
+    minLength: [1, '姓名長度至少 2 碼'],
+    maxLength: [50, '姓名長度過長，最多 50 個字'],
   },
   photo: String,
   gender: {

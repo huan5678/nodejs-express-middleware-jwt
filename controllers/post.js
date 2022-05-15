@@ -8,6 +8,7 @@ const postController = {
   getAllPosts: handleErrorAsync(async (req, res, next) => {
     const timeSort = req.query.timeSort == 'asc' ? 'createdAt' : '-createdAt';
     const q = req.query.q !== undefined ? {content: new RegExp(req.query.q)} : {};
+    q.user = req.user.id;
     const getAllPosts = await Post.find(q)
       .populate({
         path: 'user',
@@ -21,8 +22,7 @@ const postController = {
     if (typeof id === undefined || id === null || id.trim() === '') {
       return appError(404, '請正確的帶入貼文的 id', next);
     }
-    const post = await Post.findById(id);
-    post.populate({
+    const post = await Post.findById(id).populate({
       path: 'user',
       select: 'name photo',
     });
@@ -34,16 +34,9 @@ const postController = {
       return appError(400, '請正確填寫內容欄位，內容欄位不得為空', next);
     }
     data.content = data.content?.trim();
-    const userId = req.body.user;
-    if (typeof userId === undefined || userId === null || userId.trim() === '') {
-      return appError(400, '請正確填入 id 欄位', next);
-    }
-    const user = await User.findById(userId).exec();
-    if (!user) {
-      return appError(400, '請確認使用者 id 是否正確', next);
-    }
+    const user = req.user.id;
     await Post.create(data);
-    const getAllPosts = await Post.find().populate({
+    const getAllPosts = await Post.find({user}).populate({
       path: 'user',
       select: 'name photo',
     });
@@ -64,7 +57,8 @@ const postController = {
     }
     data.content = data.content?.trim();
     await Post.findByIdAndUpdate(id, data);
-    const getAllPosts = await Post.find().populate({
+    const user = req.user.id;
+    const getAllPosts = await Post.find({user}).populate({
       path: 'user',
       select: 'name photo',
     });
@@ -72,7 +66,9 @@ const postController = {
   }),
   deleteAllPost: handleErrorAsync(async (req, res, next) => {
     await Post.deleteMany({});
-    successHandle(res, '成功刪除全部貼文');
+    const user = req.user.id;
+    const getAllPosts = await Post.find({user});
+    successHandle(res, '成功刪除全部貼文', getAllPosts);
   }),
   deletePostByID: handleErrorAsync(async (req, res, next) => {
     const {id} = req.params;
@@ -86,7 +82,8 @@ const postController = {
     }
 
     await Post.findByIdAndDelete(id);
-    const getAllPosts = await Post.find().populate({
+    const user = req.user.id;
+    const getAllPosts = await Post.find({user}).populate({
       path: 'user',
       select: 'name photo',
     });

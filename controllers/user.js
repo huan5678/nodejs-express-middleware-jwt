@@ -12,14 +12,20 @@ const authController = {
     if (!email || !password || !confirmPassword || !name) {
       return appError(400, '欄位未正確填寫', next);
     }
+    if (name.length <= 1) {
+      return appError(400, '名字長度至少 2 個字', next);
+    }
+    if (password.length <= 7 || confirmPassword.length <= 7) {
+      return appError(400, '密碼長度至少 8 個字', next);
+    }
     if (!validator.isEmail(email)) {
       return appError(400, '請正確輸入 email 格式', next);
     }
-    const passwordRules = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){8,}$/gm;
+    const passwordRules = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){7,}$/gm;
     if (!passwordRules.test(password)) {
       return appError(
         400,
-        '密碼強度不足，請確認是否具至少有 1 個數字， 1 個大寫英文， 1 個小寫英文及 1 個特殊符號，密碼長度需超過 8 個字',
+        '密碼強度不足，請確認是否具至少有 1 個數字， 1 個大寫英文， 1 個小寫英文及 1 個特殊符號',
         next
       );
     }
@@ -54,7 +60,8 @@ const authController = {
     return successHandle(res, '登入成功', token);
   }),
   getProfile: handleErrorAsync(async (req, res, next) => {
-    const user = req.user;
+    const userId = req.user.id;
+    const user = await User.findById(userId);
     return successHandle(res, '成功取得使用者資訊', user);
   }),
   updatePassword: handleErrorAsync(async (req, res, next) => {
@@ -62,11 +69,14 @@ const authController = {
     if (!password || !confirmPassword) {
       return appError(400, '欄位未正確填寫', next);
     }
-    const passwordRules = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){8,}$/gm;
+    if (password.length <= 7 || confirmPassword.length <= 7) {
+      return appError(400, '密碼長度至少 8 個字', next);
+    }
+    const passwordRules = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){7,}$/gm;
     if (!passwordRules.test(password)) {
       return appError(
         400,
-        '密碼強度不足，請確認是否具至少有 1 個數字， 1 個大寫英文， 1 個小寫英文及 1 個特殊符號，密碼長度需超過 8 個字',
+        '密碼強度不足，請確認是否具至少有 1 個數字， 1 個大寫英文， 1 個小寫英文及 1 個特殊符號',
         next
       );
     }
