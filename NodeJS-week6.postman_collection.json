@@ -1,0 +1,358 @@
+{
+	"info": {
+		"_postman_id": "24f137ac-24f5-4f40-bdb1-e5d4142d71ae",
+		"name": "NodeJS-week6",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "使用者註冊",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"小傑・富力士\",\n    \"email\": \"gon@hunter.cc\",\n    \"password\": \"1Q2w3e4r@\",\n    \"confirmPassword\": \"1Q2w3e4r@\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://express-mongodb-jwt.herokuapp.com/user/sign_up",
+					"protocol": "https",
+					"host": [
+						"express-mongodb-jwt",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"user",
+						"sign_up"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "使用者登入",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"gon@hunter.cc\",\n    \"password\": \"1Q2w3e4r@\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://express-mongodb-jwt.herokuapp.com/user/sign_in",
+					"protocol": "https",
+					"host": [
+						"express-mongodb-jwt",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"user",
+						"sign_in"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "取得使用者資訊",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyN2Y3NTM5OTk2Zjg4ZWNjYzE2YjM3YiIsIm5hbWUiOiLluqvmi4nnmq7ljaEiLCJpYXQiOjE2NTI1MjQzODYsImV4cCI6MTY1MzEyOTE4Nn0.yO97f_o7WN2lp4QDaSitGhLZfK5qQJggXdOhkn-tvYo",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://express-mongodb-jwt.herokuapp.com/user/profile",
+					"protocol": "https",
+					"host": [
+						"express-mongodb-jwt",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"user",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "更新使用者密碼",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyN2Y3NTM5OTk2Zjg4ZWNjYzE2YjM3YiIsIm5hbWUiOiLluqvmi4nnmq7ljaEiLCJpYXQiOjE2NTI1MjQzODYsImV4cCI6MTY1MzEyOTE4Nn0.yO97f_o7WN2lp4QDaSitGhLZfK5qQJggXdOhkn-tvYo",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"password\": \"1Q2w3e4R@\",\n    \"confirmPassword\": \"1Q2w3e4R@\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://express-mongodb-jwt.herokuapp.com/user/update_password",
+					"protocol": "https",
+					"host": [
+						"express-mongodb-jwt",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"user",
+						"update_password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "修改使用者資訊",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyN2Y3NTM5OTk2Zjg4ZWNjYzE2YjM3YiIsIm5hbWUiOiLluqvmi4nnmq7ljaEiLCJpYXQiOjE2NTI1MjQzODYsImV4cCI6MTY1MzEyOTE4Nn0.yO97f_o7WN2lp4QDaSitGhLZfK5qQJggXdOhkn-tvYo",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"gender\": \"x\",\n    \"photo\": \"https://static.wikia.nocookie.net/hunterxhunter/images/b/b6/%E9%85%B7%E6%8B%89%E7%9A%AE%E5%8D%A1%E6%96%B0%E7%89%88.jpg/revision/latest/scale-to-width-down/530?cb=20140803085002&path-prefix=zh\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/user/profile",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "取得使用者所有貼文",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODA4MzIyNzQyYjQwYzgwMGQwNzU2ZiIsIm5hbWUiOiLlsI_lgpHjg7vlr4zlipvlo6siLCJpYXQiOjE2NTI1OTYzOTcsImV4cCI6MTY1MzIwMTE5N30.A61Ez8MbIkAvG9yavzr_lbB-znzSA1QQULtRw2BmAkU",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://express-mongodb-jwt.herokuapp.com/posts",
+					"protocol": "https",
+					"host": [
+						"express-mongodb-jwt",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "使用者新增一則貼文",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODA4MzIyNzQyYjQwYzgwMGQwNzU2ZiIsIm5hbWUiOiLlsI_lgpHjg7vlr4zlipvlo6siLCJpYXQiOjE2NTI1OTYzOTcsImV4cCI6MTY1MzIwMTE5N30.A61Ez8MbIkAvG9yavzr_lbB-znzSA1QQULtRw2BmAkU",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"content\": \"富奸又你在雷\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://express-mongodb-jwt.herokuapp.com/post",
+					"protocol": "https",
+					"host": [
+						"express-mongodb-jwt",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "使用者修改一則貼文",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODA4MzIyNzQyYjQwYzgwMGQwNzU2ZiIsIm5hbWUiOiLlsI_lgpHjg7vlr4zlipvlo6siLCJpYXQiOjE2NTI1OTYzOTcsImV4cCI6MTY1MzIwMTE5N30.A61Ez8MbIkAvG9yavzr_lbB-znzSA1QQULtRw2BmAkU",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"content\": \"又是你富奸在雷\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://express-mongodb-jwt.herokuapp.com/post/628121b09839ffa47abdc239",
+					"protocol": "https",
+					"host": [
+						"express-mongodb-jwt",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"post",
+						"628121b09839ffa47abdc239"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "使用者刪除一則貼文",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODA4MzIyNzQyYjQwYzgwMGQwNzU2ZiIsIm5hbWUiOiLlsI_lgpHjg7vlr4zlipvlo6siLCJpYXQiOjE2NTI1OTYzOTcsImV4cCI6MTY1MzIwMTE5N30.A61Ez8MbIkAvG9yavzr_lbB-znzSA1QQULtRw2BmAkU",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://express-mongodb-jwt.herokuapp.com/post/628120b4ed6ed02816ef1bfe",
+					"protocol": "https",
+					"host": [
+						"express-mongodb-jwt",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"post",
+						"628120b4ed6ed02816ef1bfe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "使用者刪除全部貼文",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODA4MzIyNzQyYjQwYzgwMGQwNzU2ZiIsIm5hbWUiOiLlsI_lgpHjg7vlr4zlipvlo6siLCJpYXQiOjE2NTI1OTYzOTcsImV4cCI6MTY1MzIwMTE5N30.A61Ez8MbIkAvG9yavzr_lbB-znzSA1QQULtRw2BmAkU",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://express-mongodb-jwt.herokuapp.com/posts",
+					"protocol": "https",
+					"host": [
+						"express-mongodb-jwt",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
