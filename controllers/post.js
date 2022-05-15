@@ -59,15 +59,16 @@ const postController = {
     data.content = data.content?.trim();
     await Post.findByIdAndUpdate(id, data);
     const user = req.user.id;
-    const getAllPosts = await Post.find({user}).populate({
+    const getAllPosts = await Post.find({user: user}).populate({
       path: 'user',
       select: 'name photo',
     });
+    console.log(getAllPosts);
     successHandle(res, '成功更新一則貼文', getAllPosts);
   }),
   deleteAllPost: handleErrorAsync(async (req, res, next) => {
-    await Post.deleteMany({});
     const user = req.user.id;
+    await Post.deleteMany({user});
     const getAllPosts = await Post.find({user});
     successHandle(res, '成功刪除全部貼文', getAllPosts);
   }),
