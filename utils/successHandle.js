@@ -1,4 +1,4 @@
-const successHandle = (res, message = '', data) => {
+const successHandle = (res, message = '', data = null) => {
   typeof data === 'array' || typeof data === 'object' || data.length > 1
     ? res.send({
         status: true,

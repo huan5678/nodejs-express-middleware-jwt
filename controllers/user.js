@@ -6,6 +6,9 @@ const successHandle = require('../utils/successHandle');
 const appError = require('../utils/appError');
 const {generateToken} = require('../middleware/handleJWT');
 
+const passwordRules =
+  /^.*(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[a-zA-Z])(?=.*[`~!@#$%^&*()_+<>?:"{},.\/\\;'[\]]).*$/;
+
 const authController = {
   userCreate: handleErrorAsync(async (req, res, next) => {
     let {email, password, confirmPassword, name} = req.body;
@@ -21,7 +24,12 @@ const authController = {
     if (!validator.isEmail(email)) {
       return appError(400, '請正確輸入 email 格式', next);
     }
-    const passwordRules = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){7,}$/gm;
+
+    const user = await User.findOne({email}).exec();
+    if (user) {
+      return appError(400, '此帳號已有人使用，請試試其他 Email 帳號', next);
+    }
+
     if (!passwordRules.test(password)) {
       return appError(
         400,
@@ -39,8 +47,14 @@ const authController = {
       email,
       password,
     };
-    await User.create(userData);
-    return successHandle(res, '成功建立使用者帳號');
+    const currentUser = await User.create(userData);
+    const userPayload = {
+      id: currentUser._id,
+      name: currentUser.name,
+      avatar: currentUser.avatar,
+    };
+    const token = generateToken(currentUser);
+    return successHandle(res, '成功建立使用者帳號', {token, user: userPayload});
   }),
   userLogin: handleErrorAsync(async (req, res, next) => {
     const {email, password} = req.body;
@@ -72,7 +86,6 @@ const authController = {
     if (password.length <= 7 || confirmPassword.length <= 7) {
       return appError(400, '密碼長度至少 8 個字', next);
     }
-    const passwordRules = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){7,}$/gm;
     if (!passwordRules.test(password)) {
       return appError(
         400,
